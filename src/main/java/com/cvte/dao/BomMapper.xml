@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.cvte.dao.BomMapper">
+  	  <insert
+	  id="insertItem"
+	  parameterType="com.cvte.Entity.ItemData"
+	  flushCache="true"
+	  statementType="PREPARED"
+	  useGeneratedKeys="false"
+	  timeout="20">
+	<!--插入  -->
+		INSERT INTO ITEMDATA (
+		des				,
+		prodmodel		,
+		applybu			,
+		funid			,
+		prodname		,
+		editClassify	
+		)VALUES(
+		#{Des} 			,
+		#{ProdModel}	,
+		#{ApplyBu}		,
+		#{FunId}		,
+		#{ProdName}		,
+		#{EditClassify}	
+		)
+	  </insert>
+	  
+	  
+	  <update
+	  id="updateItem"
+	  parameterType="com.cvte.Entity.ItemData"
+	  flushCache="true"
+	  statementType="PREPARED"
+	  timeout="20">
+		  UPDATE ITEMDATA
+		  SET 
+		      des = #{Des},
+		      prodmodel	= #{ProdModel},
+		      applybu = #{ApplyBu}		         
+		  WHERE
+		      funid=#{FunId} and
+		      prodname = #{ProdName} and
+		      editClassify = #{EditClassify}   
+  		</update>
+  		
+  		<delete id="deleteItem" parameterType="com.cvte.Entity.ItemData">
+        delete from ITEMDATA 
+        where 
+        funid=#{FunId} and
+		prodname = #{ProdName} and
+		editClassify = #{EditClassify}   
+    </delete>
+    <resultMap type="com.cvte.Entity.ItemData" id="resultListItem">
+        <result column="des" property="Des" />
+        <result column="prodmodel" property="ProdModel" />
+        <result column="applybu" property="ApplyBu" />
+        <result column="funid" property="FunId" />
+        <result column="prodname" property="ProdName" />
+        <result column="editClassify" property="EditClassify" />
+    </resultMap>
+	
+	<!-- 返回list 的select 语句，注意 resultMap 的值是指向前面定义好的 -->
+	<select id="selectItems" resultMap="resultListItem">
+	    select * from ITEMDATA
+	</select>
+  		
+  		
+  </mapper>
